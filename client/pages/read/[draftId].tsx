@@ -81,11 +81,14 @@ const Post = () => {
           <Typography variant="h6" className={classes.appTitle}>
             <a href="/home">Medion</a>
           </Typography>
-          <Button href="/" color="inherit">My Pages</Button>
+          <Button href="/My Pages" color="inherit">My Pages</Button>
         </Toolbar>
       </AppBar>
       <ReadDraft draftId={draftId} preview={false}></ReadDraft>
-      {(user?.isSubscribed || user?._id == draftData?.userId) ? '' : "Please Subscribe  to view full content"}
+      {(user?.isSubscribed || user?._id == draftData?.userId) ? '' :
+        <p className="smalltext">
+          Please Subscribe  to view full content
+        </p>}
 
     </div>
   )
