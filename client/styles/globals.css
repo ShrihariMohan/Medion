@@ -1,0 +1,120 @@
+html,
+body {
+  background-color: #F7F7F7;
+  color: #222222;
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.RichEditor-root {
+  background: #fff;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  padding: 15px;
+  margin-right: 8px;
+  margin-top: 64px;
+  height: 100%;
+  margin-bottom: 8px;
+}
+
+.RichEditor-root-read-draft {
+  background: #fff;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  padding: 15px;
+  margin-right: 8px;
+  margin-top: 16px;
+  height: 100%;
+  margin-bottom: 8px;
+}
+
+.RichEditor-editor {
+  border-top: 1px solid #ddd;
+  cursor: text;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.RichEditor-editor .public-DraftEditorPlaceholder-root,
+.RichEditor-editor .public-DraftEditor-content {
+  margin: 0 -15px -15px;
+  padding: 15px;
+}
+
+.RichEditor-editor .public-DraftEditor-content {
+  min-height: 100px;
+}
+
+.RichEditor-hidePlaceholder .public-DraftEditorPlaceholder-root {
+  display: none;
+}
+
+.RichEditor-editor .RichEditor-blockquote {
+  border-left: 5px solid #eee;
+  color: #666;
+  font-style: italic;
+  margin: 16px 0;
+  padding: 10px 20px;
+}
+
+.RichEditor-editor .public-DraftStyleDefault-pre {
+  background-color: rgba(0, 0, 0, 0.05);
+  font-size: 16px;
+  padding: 20px;
+}
+
+.RichEditor-controls {
+  font-size: 14px;
+  margin-bottom: 5px;
+  user-select: none;
+}
+
+.RichEditor-styleButton {
+  color: #999;
+  cursor: pointer;
+  margin-right: 16px;
+  padding: 2px 0;
+  display: inline-block;
+}
+
+.RichEditor-activeButton {
+  color: #5890ff;
+}
+
+.landingpage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+   height: 100vh;
+  background: rgb(233, 231, 231);
+}
+
+.bigtext {
+  font-size: 140px;
+  font-weight: 500;
+  padding-top: 50px;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+.smalltext {
+  text-align: center;
+  color: rgb(122, 123, 124);
+  font-size: 30px;
+  font-weight: 500;
+  margin-top: 0px;
+}
+
+
