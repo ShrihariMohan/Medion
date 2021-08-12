@@ -81,7 +81,7 @@ const Post = () => {
           <Typography variant="h6" className={classes.appTitle}>
             <a href="/home">Medion</a>
           </Typography>
-          <Button href="/My Pages" color="inherit">My Pages</Button>
+          <Button href="/mypages" color="inherit">My Pages</Button>
         </Toolbar>
       </AppBar>
       <ReadDraft draftId={draftId} preview={false}></ReadDraft>
