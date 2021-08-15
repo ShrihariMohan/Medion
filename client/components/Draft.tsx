@@ -8,14 +8,48 @@ import * as draftService from '../services/draftService';
 import * as userService from '../services/userService';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
-import Radio from '@material-ui/core/Radio';
-import Editor from '@draft-js-plugins/editor';
+import createAlignmentPlugin from '@draft-js-plugins/alignment';
+import createFocusPlugin from '@draft-js-plugins/focus';
+import createResizeablePlugin from '@draft-js-plugins/resizeable';
+import createBlockDndPlugin from '@draft-js-plugins/drag-n-drop';
+import Editor, { composeDecorators } from '@draft-js-plugins/editor';
+import createImagePlugin from '@draft-js-plugins/image';
+import createDragNDropUploadPlugin from '@draft-js-plugins/drag-n-drop-upload';
 
 import 'draft-js/dist/Draft.css';
+
+const focusPlugin = createFocusPlugin();
+const resizeablePlugin = createResizeablePlugin();
+const blockDndPlugin = createBlockDndPlugin();
+const alignmentPlugin = createAlignmentPlugin();
+const { AlignmentTool } = alignmentPlugin;
+
+const decorator = composeDecorators(
+  resizeablePlugin.decorator,
+  alignmentPlugin.decorator,
+  focusPlugin.decorator,
+  blockDndPlugin.decorator
+);
+
+const imagePlugin = createImagePlugin({ decorator });
+
+const mockUpload = (...args: any) => {
+  console.log(args)
+}
+
+const dragNDropFileUploadPlugin = createDragNDropUploadPlugin({
+  handleUpload: mockUpload,
+  addImage: imagePlugin.addImage as any,
+});
+
+const plugins = [
+  dragNDropFileUploadPlugin,
+  blockDndPlugin,
+  focusPlugin,
+  alignmentPlugin,
+  resizeablePlugin,
+  imagePlugin,
+];
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -194,10 +228,10 @@ const Draft: React.FC<{ draftId: string, readOnly: boolean, preview: boolean }> 
           placeholder="Lets go man!"
           spellCheck={true}
           readOnly={readOnly}
-        // plugins={[imagePlugin]}
+          plugins={plugins}
         />
       </div>
-      {user && !readOnly ? <Button variant="outlined" color="primary" size="small" onClick={saveDraft}>
+      {user ? <Button variant="outlined" color="primary" size="small" onClick={saveDraft}>
         Save Draft
       </Button> : null}
       <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>

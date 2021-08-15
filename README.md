@@ -31,12 +31,20 @@ The server should be live on http://localhost:3000
 - Can save pages with basic text editing functionalites
 - See other people pages if only subscribed to the medion ( dummy implementaion)
 - Google Oauth Login
+- added image support ( drag and drop the image)
+- user can delete his/her page
 
 ## More Features to be added
 - user can set a level (free or paid version) for a page
-- more editing options ( insertion of image , table)
 
 # Refactoring 
 1. More usable UI.
-2. Setting things in global context.
+2. Use global context.
 3. Better DB logics
+4. Save media seperately and retrieve it when page loads.
+
+# BUGS
+1. While deleting a page , syntax error is occuring
+2. Warning: findDOMNode is deprecated in StrictMode
+3. if the first line is lengthy, home page gets messy.
+4. unequal size cards in home page.

@@ -16,8 +16,8 @@ var authUtil_1 = require("./utils/authUtil");
 mongoose_1.default.set("useFindAndModify", false);
 var db = mongoose_1.default.connect(process.env.DB_URL || '', { useNewUrlParser: true, useUnifiedTopology: true });
 var app = express_1.default();
-app.use(express_1.default.urlencoded({ extended: false }));
-app.use(express_1.default.json());
+app.use(express_1.default.urlencoded({ extended: false, limit: '200mb' }));
+app.use(express_1.default.json({ limit: '200mb' }));
 app.use(cookie_session_1.default({
     name: "session",
     keys: [process.env.KEY1, process.env.KEY2],

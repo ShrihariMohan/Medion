@@ -50,9 +50,15 @@ router.put("/", async (req, res, next) => {
   res.status(201).send(draft);
 });
 
-router.delete("/", async (req, res, next) => {
-  await Draft.findByIdAndDelete(req.body._id);
-  res.status(204);
+router.delete("/:id", async (req, res, next) => {
+  const draft = await Draft.findById(req.params.id)
+  if (draft?._id == req.params.id) {
+    await Draft.findByIdAndDelete(req.params.id);
+    res.sendStatus(204);
+  }
+  else {
+    res.sendStatus(401)
+  }
 });
 
 export = router;

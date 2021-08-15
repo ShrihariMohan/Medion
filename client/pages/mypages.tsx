@@ -25,6 +25,12 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { convertFromRaw, convertToRaw } from 'draft-js';
 import Button from '@material-ui/core/Button';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { useRouter } from 'next/router'
+
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) =>
@@ -111,6 +117,7 @@ export default function Home() {
   const [user, setUser] = useState<userType>();
   const [availableDrafts, setDrafts] = useState<[availableDraftsType]>();
   const [draftId, setdraftId] = useState('');
+  const router = useRouter()
 
   const fetchDrafts = () => {
     return draftService.getDrafts().then(data => {
@@ -138,6 +145,19 @@ export default function Home() {
     setOpen(false);
   };
 
+  const deleteDraft = async (draftId: string) => {
+    console.log(draftId);
+    try {
+      await draftService.deleteDraft(draftId);
+    }
+    catch (err) {
+      console.log(err)
+    }
+    finally {
+      fetchDrafts();
+    }
+  }
+
   const addNewPage = () => {
     let emptyContentState = convertFromRaw({
       entityMap: {},
@@ -159,6 +179,7 @@ export default function Home() {
       fetchDrafts();
     });
   }
+
 
   const toggleSubscription = () => {
     console.log("Inside toggleing")
@@ -218,12 +239,25 @@ export default function Home() {
           {user?.name ? <div>
 
             <List>
+
               <ListItem button onClick={addNewPage}>
                 <AddCircleOutlineIcon /> <ListItemText className={classes.newPage} primary='Add New Page' />
               </ListItem>
               {availableDrafts?.map((draft, index) => (
                 <ListItem button key={draft._id} onClick={() => setdraftId(draft._id)}>
                   <ListItemText primary={draft.title} />
+                  <PopupState variant="popover" popupId="demo-popup-menu">
+                    {(popupState) => (
+                      <React.Fragment>
+                        <Button color="secondary" {...bindTrigger(popupState)}>
+                          <MoreVertIcon />
+                        </Button>
+                        <Menu {...bindMenu(popupState)}>
+                          <MenuItem onClick={() => { deleteDraft(draft._id); }}>Delete</MenuItem>
+                        </Menu>
+                      </React.Fragment>
+                    )}
+                  </PopupState>
                 </ListItem>
               ))}
             </List>

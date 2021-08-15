@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Editor, EditorState, convertFromRaw, RichUtils, getDefaultKeyBinding } from 'draft-js';
+import { EditorState, convertFromRaw, RichUtils, getDefaultKeyBinding } from 'draft-js';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import * as draftService from '../services/draftService';
 import * as userService from '../services/userService';
+import Editor, { composeDecorators } from '@draft-js-plugins/editor';
+import createImagePlugin from '@draft-js-plugins/image';
+import createAlignmentPlugin from '@draft-js-plugins/alignment';
+import createFocusPlugin from '@draft-js-plugins/focus';
+import createResizeablePlugin from '@draft-js-plugins/resizeable';
 
 import 'draft-js/dist/Draft.css';
 
@@ -16,6 +21,25 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   }),
 );
+const focusPlugin = createFocusPlugin();
+const resizeablePlugin = createResizeablePlugin();
+const alignmentPlugin = createAlignmentPlugin();
+const { AlignmentTool } = alignmentPlugin;
+
+const decorator = composeDecorators(
+  resizeablePlugin.decorator,
+  alignmentPlugin.decorator,
+  focusPlugin.decorator,
+);
+
+const imagePlugin = createImagePlugin({ decorator });
+
+const plugins = [
+  focusPlugin,
+  alignmentPlugin,
+  resizeablePlugin,
+  imagePlugin,
+];
 
 const ReadDraft: React.FC<{ draftId: string, preview: boolean }> = ({ draftId, preview }) => {
   const classes = useStyles();
@@ -92,6 +116,7 @@ const ReadDraft: React.FC<{ draftId: string, preview: boolean }> = ({ draftId, p
 
   return (
     <div className="RichEditor-root-read-draft">
+      {preview ? null : <p className="title"> {draftData?.title}</p>}
       <div className={className}>
         <Editor
           editorKey="editor"
@@ -104,6 +129,7 @@ const ReadDraft: React.FC<{ draftId: string, preview: boolean }> = ({ draftId, p
           placeholder="Lets go man!"
           spellCheck={true}
           readOnly={true}
+          plugins={plugins}
         />
       </div>
 

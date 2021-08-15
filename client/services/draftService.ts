@@ -51,3 +51,13 @@ export async function saveDraft(draftId: string,
   const resp = await response.json();
   return resp;
 }
+
+export async function deleteDraft(draftId: string) {
+  const response = await fetch(`http://localhost:3000/api/draft/${draftId}`, {
+    credentials: 'include',
+    method: 'DELETE'
+  });
+  const res = await response.json();
+  console.log(res);
+  return res;
+}

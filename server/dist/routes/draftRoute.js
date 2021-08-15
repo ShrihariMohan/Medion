@@ -123,14 +123,23 @@ router.put("/", function (req, res, next) { return __awaiter(void 0, void 0, voi
         }
     });
 }); });
-router.delete("/", function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+router.delete("/:id", function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var draft;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, draft_1.Draft.findByIdAndDelete(req.body._id)];
+            case 0: return [4 /*yield*/, draft_1.Draft.findById(req.params.id)];
             case 1:
+                draft = _a.sent();
+                if (!((draft === null || draft === void 0 ? void 0 : draft._id) == req.params.id)) return [3 /*break*/, 3];
+                return [4 /*yield*/, draft_1.Draft.findByIdAndDelete(req.params.id)];
+            case 2:
                 _a.sent();
-                res.status(204);
-                return [2 /*return*/];
+                res.sendStatus(204);
+                return [3 /*break*/, 4];
+            case 3:
+                res.sendStatus(401);
+                _a.label = 4;
+            case 4: return [2 /*return*/];
         }
     });
 }); });
