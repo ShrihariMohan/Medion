@@ -1,3 +1,7 @@
+
+
+https://user-images.githubusercontent.com/60439461/129234000-1ffc8fe5-d4c6-408c-8a35-440ee2484e29.mp4
+
 # Medion
 This is an simple text-editor app built using draftjs and nextjs
 
